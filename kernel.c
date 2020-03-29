@@ -1,5 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<windows.h>
+#include<string.h>
 #include"shell.h"
 #include"pcb.h"
 #include"ram.h"
@@ -32,6 +34,33 @@ int kernel(){
 
 void boot(){
     //INITIALIZE AND ACQUIRE RESOURCES TO RUN
+    
+    char buffer[100];
+    //we first get the current diretory 
+    GetCurrentDirectory(100, buffer);
+    //we then concat backing store to the current directory
+    char add[] = "//backingstore";
+    strcat(buffer, add);
+    printf("%s\n", buffer);
+    //we now delete if that directory exists
+    BOOL deleted = RemoveDirectory(buffer);
+    if(deleted){
+        printf("Directory deleted successfully\n");
+    }
+    if(!deleted){
+        printf("Directory not found to delete\n");
+    }
+
+    //we now create the directory
+    BOOL bdir = CreateDirectory(buffer, NULL);
+    
+    if(!bdir) {
+        printf("Unable to create directory\n");
+    }
+    else{
+        printf("Directory created successfully\n");
+    }
+    
 }
 
 int main(int argc, char const *argv[])
