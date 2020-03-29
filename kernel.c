@@ -5,6 +5,7 @@
 #include"ram.h"
 #include"cpu.h"
 #include"interpreter.h"
+#include"memorymanager.h"
 
 /*
 This is a node in the Ready Queue implemented as 
@@ -18,7 +19,7 @@ typedef struct ReadyQueueNode {
     struct ReadyQueueNode* next;
 } ReadyQueueNode;
 
-//check if thsi got added
+
 
 ReadyQueueNode* head = NULL;
 ReadyQueueNode* tail = NULL;
@@ -29,10 +30,14 @@ int kernel(){
     return err;
 }
 
+void boot(){
+    //INITIALIZE AND ACQUIRE RESOURCES TO RUN
+}
+
 int main(int argc, char const *argv[])
 {
     int error = 0;
-    //boot();
+    boot();
     error = kernel();
     return error;
 }
@@ -99,11 +104,15 @@ int myinit(char* filename){
     if (fp == NULL) return -3;
     int start;
     int end;
+    printf("File opened\n");
     addToRAM(fp,&start,&end);
+    // WE CALL LAUNCHER HERE
+    printf("Calling launcher\n");
+    launcher(fp);
     fclose(fp);
     if (start == -1) return -5;
     PCB* pcb = makePCB(start,end);
-    addToReady(pcb);
+    addToReady(pcb);  
     return 0;
 }
 

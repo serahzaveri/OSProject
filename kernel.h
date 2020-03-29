@@ -1,4 +1,5 @@
 #include "pcb.h"
+#include"memorymanager.h"
 /*
 Adds a pcb to the tail of the linked list
 */

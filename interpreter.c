@@ -116,6 +116,7 @@ int exec(char * words[]){
         }
     }
 
+    
     printf("|----------| ");
     printf("\tSTARTING CONCURRENT PROGRAMS ( ");
     for (int i = 0; i < 3; i++)
@@ -127,6 +128,61 @@ int exec(char * words[]){
     printf(")\t|----------|\n");
 
     scheduler();
+
+    printf("|----------| ");
+    printf("\tTERMINATING ALL CONCURRENT PROGRAMS");
+    printf("\t|----------|\n");
+    return 0;
+}
+
+int exec2(char * words[]){
+
+    //this method is when we run exec with virtual memory
+    printf("Entered exec2 method for running files with virtual memory\n");
+    char * filename[3] = { "_NONE_", "_NONE_", "_NONE_"};
+    int nextFree = 0;
+    int errorCode = 0;
+
+    for (int i = 1; i <= 3; i++)
+    {
+        //IMPO: FOR NOW LETS ASSUME THAT ALL FILENAMES ARE DIFFERENT EDIT LATER TO OPENING SAME FILE TWICE or thrice
+
+        //makes sure command input of filename is not empty so if only one file name is given it will enter if only once
+        //returns 0 if both strings are identical
+        if ( strcmp(words[i],"_NONE_") != 0 ) {
+            
+            //filename[] stores the file if not none
+            filename[nextFree] = strdup(words[i]);
+            nextFree++;
+            //calls myinit(filename)
+            errorCode = myinit(words[i]);
+            if ( errorCode < 0){
+                displayCode(errorCode,words[i]);
+                printf("EXEC COMMAND ABORTED...\n");
+                emptyReadyQueue();
+                return 0;
+            }
+            //errorCode = launcher();
+            
+        // We've ran through every filenames, so get out of the for loop
+        } else {
+            break;
+        }
+    }
+    //We now have our files stored in filename and passed through myinit()
+    
+    printf("|----------| ");
+    printf("\tSTARTING CONCURRENT PROGRAMS ( ");
+    for (int i = 0; i < 3; i++)
+    {
+        if ( strcmp(filename[i],"_NONE_") != 0 ){
+            printf("%s ", filename[i]);
+        }
+    }
+    printf(")\t|----------|\n");
+    printf("We dont call scheduler for now\n");
+    //UNCOMMENET NEXT LINE LATER
+    //scheduler();
 
     printf("|----------| ");
     printf("\tTERMINATING ALL CONCURRENT PROGRAMS");
@@ -201,7 +257,13 @@ int interpreter(char* words[]){
         if ( strcmp(words[1],"_NONE_") == 0  || strcmp(words[4],"_NONE_") != 0 ) return -2;
 
         errorCode = exec(words);
-    } else {
+    } else if ( strcmp(words[0],"exec2") == 0 ) {
+        // if it's the "exec2" command then we run with virtual memory
+        // check if there's at least 2 arguments and not >= 4 arguments
+        if ( strcmp(words[1],"_NONE_") == 0  || strcmp(words[4],"_NONE_") != 0 ) return -2;
+
+        errorCode = exec2(words);
+        } else {
         // Error code for unknown command
         errorCode = -4;
     }
