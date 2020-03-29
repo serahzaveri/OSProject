@@ -18,6 +18,8 @@ typedef struct ReadyQueueNode {
     struct ReadyQueueNode* next;
 } ReadyQueueNode;
 
+//check if thsi got added
+
 ReadyQueueNode* head = NULL;
 ReadyQueueNode* tail = NULL;
 int sizeOfQueue = 0;
@@ -30,7 +32,7 @@ int kernel(){
 int main(int argc, char const *argv[])
 {
     int error = 0;
-    boot();
+    //boot();
     error = kernel();
     return error;
 }
