@@ -29,6 +29,8 @@ ERRORCODE -5 : NOT ENOUGH RAM (EXEC)
 */
 int myinit(char*);
 
+int myinit2(char*);
+
 int scheduler();
 
 /*

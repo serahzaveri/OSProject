@@ -133,8 +133,26 @@ int myinit(char* filename){
     if (fp == NULL) return -3;
     int start;
     int end;
-    printf("File opened\n");
     addToRAM(fp,&start,&end);
+    fclose(fp);
+    if (start == -1) return -5;
+    PCB* pcb = makePCB(start,end);
+    addToReady(pcb);  
+    return 0;
+}
+
+int myinit2(char* filename){
+    // Open the filename to get FILE *
+    // call addToRam on that File *
+    // If error (check via start/end variable), return that error
+    // Else create pcb using MakePCB
+    // Then add it to the ReadyQueue
+    FILE * fp = fopen(filename,"r");
+    if (fp == NULL) return -3;
+    int start;
+    int end;
+    printf("File opened\n");
+    //addToRAM(fp,&start,&end);
     // WE CALL LAUNCHER HERE
     printf("Calling launcher\n");
     launcher(fp);

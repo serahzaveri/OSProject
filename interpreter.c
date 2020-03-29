@@ -135,7 +135,7 @@ int exec(char * words[]){
     return 0;
 }
 
-int exec2(char * words[]){
+int virt(char * words[]){
 
     //this method is when we run exec with virtual memory
     printf("Entered exec2 method for running files with virtual memory\n");
@@ -155,7 +155,7 @@ int exec2(char * words[]){
             filename[nextFree] = strdup(words[i]);
             nextFree++;
             //calls myinit(filename)
-            errorCode = myinit(words[i]);
+            errorCode = myinit2(words[i]);
             if ( errorCode < 0){
                 displayCode(errorCode,words[i]);
                 printf("EXEC COMMAND ABORTED...\n");
@@ -257,12 +257,12 @@ int interpreter(char* words[]){
         if ( strcmp(words[1],"_NONE_") == 0  || strcmp(words[4],"_NONE_") != 0 ) return -2;
 
         errorCode = exec(words);
-    } else if ( strcmp(words[0],"exec2") == 0 ) {
+    } else if ( strcmp(words[0],"virt") == 0 ) {
         // if it's the "exec2" command then we run with virtual memory
         // check if there's at least 2 arguments and not >= 4 arguments
         if ( strcmp(words[1],"_NONE_") == 0  || strcmp(words[4],"_NONE_") != 0 ) return -2;
 
-        errorCode = exec2(words);
+        errorCode = virt(words);
         } else {
         // Error code for unknown command
         errorCode = -4;
