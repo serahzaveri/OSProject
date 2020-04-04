@@ -10,8 +10,11 @@ int countTotalPages(FILE *fp){
     for (c = getc(fp); c != EOF; c = getc(fp)) 
         if (c == '\n') // Increment count if this character is newline 
             count = count + 1; 
-
-    return count;
+    printf("No of lines is %d\n",count);
+    int q = count/4;
+    if (q*4 < count)
+        ++q;
+    return q;
 }
 int launcher(FILE *source){
     printf("Launcher entered\n");
@@ -64,6 +67,6 @@ int launcher(FILE *source){
     // we now call countTotalPages
     int number = countTotalPages(fp);
     fclose(fp);
-    printf("The file has %d lines\n", number);
+    printf("The file needs %d pages\n", number);
     return 0;
 }
