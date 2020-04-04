@@ -138,7 +138,7 @@ int exec(char * words[]){
 int virt(char * words[]){
 
     //this method is when we run exec with virtual memory
-    printf("Entered exec2 method for running files with virtual memory\n");
+    printf("Entered virt method for running files with virtual memory\n");
     char * filename[3] = { "_NONE_", "_NONE_", "_NONE_"};
     int nextFree = 0;
     int errorCode = 0;

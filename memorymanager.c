@@ -2,6 +2,17 @@
 #include<string.h>
 #include<windows.h>
 
+int countTotalPages(FILE *fp){
+    //returns the total number of pages needed by the program
+    int count =0;
+    char c;
+    //Extract characters from file and store in character c 
+    for (c = getc(fp); c != EOF; c = getc(fp)) 
+        if (c == '\n') // Increment count if this character is newline 
+            count = count + 1; 
+
+    return count;
+}
 int launcher(FILE *source){
     printf("Launcher entered\n");
     //we now copy the file into the backing store
@@ -13,29 +24,46 @@ int launcher(FILE *source){
     char add[] = "//backingstore";
     strcat(buffer, add);
     BOOL changeDIR = SetCurrentDirectory(buffer);
-    //GetCurrentDirectory(100, buffer);
-    //printf("%s\n", buffer);
-    strcat(buffer, "//targetfile5.txt");
+    int num = 0;
+    char i[5];
+    itoa(num, i, 10);
+    char name[] = "//targetfile";
+    strcat(name, i);
+    num++;
+    strcat(name, ".txt");
+    printf("IMPO: the name of the file will be %s\n", name);
+    strcat(buffer, name);
+    printf("This is what is stored in the buffer %s \n", buffer);
     FILE *target = fopen(buffer,"w");
 
     if( target == NULL ) {
-      printf("Press any key to exit...\n");
+      printf("Unable to create file in directory\n");
    }
     char ch;
     ch = fgetc(source);
     while(ch != EOF) {
-        //printf("Entered\n");
         fputc(ch, target);
         ch = fgetc(source);
     }
 
     printf("File copied successfully\n");
+    //Close file pointer pointing to original file
     fclose(source);
-    
     fclose(target);
 
-    //We now need to copy FILE p into our current directory
-    //BOOL copied = CopyFileA(p, buffer, 0);
-    printf("New file created\n");
+    FILE *fp;
+    char filename[] = "targetfile0.txt";
+    // Open the file 
+    fp = fopen(filename, "r"); 
+    // Check if file exists 
+    if (fp == NULL) 
+    { 
+        printf("Could not open file\n"); 
+        return 0; 
+    } 
+    // we now call countTotalPages
+    int number = countTotalPages(fp);
+    fclose(fp);
+    printf("The file has %d lines\n", number);
     return 0;
 }

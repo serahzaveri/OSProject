@@ -34,15 +34,18 @@ int kernel(){
 
 void boot(){
     //INITIALIZE AND ACQUIRE RESOURCES TO RUN
-    
+    //1: Handle's RAM
+    resetRAM();
+    //2: Prepare's the backing store
     char buffer[100];
     //we first get the current diretory 
     GetCurrentDirectory(100, buffer);
     //we then concat backing store to the current directory
-    char add[] = "//backingstore";
+    char add[] = "//BackingStore";
     strcat(buffer, add);
     printf("%s\n", buffer);
     //we now delete if that directory exists
+    //NOTE: IT ONLT GETS DELETED IF THE DIRECTORY IS EMPTY
     BOOL deleted = RemoveDirectory(buffer);
     if(deleted){
         printf("Directory deleted successfully\n");
@@ -50,7 +53,6 @@ void boot(){
     if(!deleted){
         printf("Directory not found to delete\n");
     }
-
     //we now create the directory
     BOOL bdir = CreateDirectory(buffer, NULL);
     
@@ -66,8 +68,8 @@ void boot(){
 int main(int argc, char const *argv[])
 {
     int error = 0;
-    boot();
-    error = kernel();
+    boot(); //First: actions performed by boot
+    error = kernel(); //Second: actions performed by kernel
     return error;
 }
 /*
