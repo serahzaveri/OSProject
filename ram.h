@@ -3,7 +3,7 @@
 Ram structure implemented as an array.
 Size is 1000 strings
 */
-char* ram[1000];
+char* ram[40];
 
 /*
 This function will add the content of a file to the local ram array variable

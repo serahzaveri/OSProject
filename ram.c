@@ -9,7 +9,7 @@ int nextFree = 0;
 Ram structure implemented as an array.
 Size is 1000 strings
 */
-char *ram[1000]; 
+char *ram[40];
 
 /*
 This function will delete the content in ram between the 2 indices parameters (inclusive)

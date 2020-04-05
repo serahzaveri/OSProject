@@ -35,6 +35,7 @@ int kernel(){
 void boot(){
     //INITIALIZE AND ACQUIRE RESOURCES TO RUN
     //1: Handle's RAM
+    removeFromRam(0, 39);
     resetRAM();
     //2: Prepare's the backing store
     char buffer[100];
