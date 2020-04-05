@@ -3,6 +3,7 @@
 #include<string.h>
 #include<windows.h>
 #include"ram.h"
+#include"pcb.h"
 
 int countTotalPages(FILE *fo){
     //returns the total number of pages needed by the program
@@ -20,6 +21,18 @@ int countTotalPages(FILE *fo){
 }
 
 int findFrame(){
+    //findFrame should be looking for NULL frames and returning -1 if none are found
+    int i;
+    for(i =0; i <=36; i = i+4){
+        if(ram[i] == NULL) {
+            printf("Ram %d is empty\n", i);
+            return i;
+        }
+    }
+    return -2;
+}
+
+int findVictim (PCB *p) {
     return 0;
 }
 
@@ -42,7 +55,7 @@ void loadPage(int pageNumber, FILE *fp, int framenumber) {
     while(fscanf(fp, "%[^\n]\n", str) != EOF) {
         printf("CHECK: %s\n", str);
         if (i >= file_start && i <= file_end) {
-            printf("Entered %d\n", i);
+            printf("Entered %d and ram is at %d\n", i, ram_start);
             ram[ram_start] = str;
             ram_start ++;
         }
@@ -69,9 +82,9 @@ int launcher(FILE *source){
     strcat(name, i);
     num++;
     strcat(name, ".txt");
-    printf("IMPO: the name of the file will be %s\n", name);
+    //printf("IMPO: the name of the file will be %s\n", name);
     strcat(buffer, name);
-    printf("This is what is stored in the buffer %s \n", buffer);
+    //printf("This is what is stored in the buffer %s \n", buffer);
     FILE *target = fopen(buffer,"w");
 
     if( target == NULL ) {
@@ -84,7 +97,7 @@ int launcher(FILE *source){
         ch = fgetc(source);
     }
 
-    printf("File copied successfully\n");
+    //printf("File copied successfully\n");
     //Close file pointer pointing to original file
     fclose(source);
     fclose(target);
@@ -105,7 +118,8 @@ int launcher(FILE *source){
     //we rewind the get the pointer pointing at start of file
     rewind(fp);
     //testing loadpage function
-    loadPage(2, fp, 3);
+    loadPage(2, fp, 1);
     fclose(fp);
+    int emptyFrame = findFrame();
     return 0;
 }

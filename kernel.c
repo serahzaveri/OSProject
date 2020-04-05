@@ -154,10 +154,10 @@ int myinit2(char* filename){
     if (fp == NULL) return -3;
     int start;
     int end;
-    printf("File opened\n");
+    //printf("File opened\n");
     //addToRAM(fp,&start,&end);
     // WE CALL LAUNCHER HERE
-    printf("Calling launcher\n");
+    //printf("Calling launcher\n");
     launcher(fp);
     fclose(fp);
     if (start == -1) return -5;
