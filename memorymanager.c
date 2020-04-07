@@ -32,8 +32,10 @@ int findFrame(){
     return -2;
 }
 
-int findVictim (PCB *p) {
-    return 0;
+int findVictim () {
+    //Initilizes random number generator
+    int r = rand() % 11;
+    return r;
 }
 
 void loadPage(int pageNumber, FILE *fp, int framenumber) {
@@ -121,5 +123,9 @@ int launcher(FILE *source){
     loadPage(2, fp, 1);
     fclose(fp);
     int emptyFrame = findFrame();
+    //if(emptyFrame == -1) {
+    int random = findVictim();
+    printf("The random number generated is %d\n", random);
+    //}
     return 0;
 }
