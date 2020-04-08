@@ -7,13 +7,13 @@
 
 int countTotalPages(FILE *fo){
     //returns the total number of pages needed by the program
-    int count = 0;
+    int count = -1;
     char c;
     //Extract characters from file and store in character c 
     for (c = getc(fo); c != EOF; c = getc(fo)) 
         if (c == '\n') // Increment count if this character is newline 
             count = count + 1; 
-    printf("No of lines is %d\n",count);
+    printf("No of lines starting from zero is %d\n",count);
     int q = count/4;
     if (q*4 < count)
         ++q;
@@ -25,8 +25,8 @@ int findFrame(){
     int i;
     for(i =0; i <=36; i = i+4){
         if(ram[i] == NULL) {
-            printf("Ram %d is empty\n", i);
-            return i;
+            printf("Frame no: %d in RAM is empty\n", i/4);
+            return i/4;
         }
     }
     return -2;
@@ -44,20 +44,21 @@ void loadPage(int pageNumber, FILE *fp, int framenumber) {
     //The function loads the 4 lines of code from the page into the frame in ram[]
 
     //we first calculate the lines of code the page number refers to
-    int file_end = pageNumber * 4;
-    int file_start = file_end - 3;
+    int file_start = pageNumber * 4;
+    int file_end = file_start + 3;
 
     //we then calculate the position in RAM[] that it needs to be loaded into
-    int ram_end = framenumber * 4 - 1;
-    int ram_start = ram_end - 3;
+    
+    int ram_start = framenumber * 4;
+    int ram_end = ram_start +3;
 
     printf("The lines of code of the file are from %d --- %d and the index in RAM are %d -- %d\n", file_start, file_end, ram_start, ram_end);
     char str[60];
-    int i = 1;
+    int i = 0;
     while(fscanf(fp, "%[^\n]\n", str) != EOF) {
-        printf("CHECK: %s\n", str);
+        //printf("CHECK: %s\n", str);
         if (i >= file_start && i <= file_end) {
-            printf("Entered %d and ram is at %d\n", i, ram_start);
+            printf("Line %s is in RAM at %d\n", str, ram_start);
             ram[ram_start] = str;
             ram_start ++;
         }
@@ -67,7 +68,7 @@ void loadPage(int pageNumber, FILE *fp, int framenumber) {
 }
 
 int launcher(FILE *source){
-    printf("Launcher entered\n");
+    //printf("Launcher entered\n");
     //we now copy the file into the backing store
     //in order to do so we first get the current directory
     char buffer[100];
@@ -120,7 +121,7 @@ int launcher(FILE *source){
     //we rewind the get the pointer pointing at start of file
     rewind(fp);
     //testing loadpage function
-    loadPage(2, fp, 1);
+    loadPage(1, fp, 0);
     fclose(fp);
     int emptyFrame = findFrame();
     //if(emptyFrame == -1) {

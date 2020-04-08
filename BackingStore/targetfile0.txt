@@ -1,3 +1,8 @@
-set x 10
-print x
+set z 30
+print z
+set z 40 
+print z
 quit
+quit
+quit
+set z 90
