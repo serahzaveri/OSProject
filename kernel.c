@@ -127,6 +127,7 @@ ERRORCODE -3 : SCRIPT NOT FOUND
 ERRORCODE -5 : NOT ENOUGH RAM (EXEC)
 */
 int myinit(char* filename){
+    /*
     // Open the filename to get FILE *
     // call addToRam on that File *
     // If error (check via start/end variable), return that error
@@ -140,7 +141,7 @@ int myinit(char* filename){
     fclose(fp);
     if (start == -1) return -5;
     PCB* pcb = makePCB(start,end);
-    addToReady(pcb);  
+    addToReady(pcb); */ 
     return 0;
 }
 

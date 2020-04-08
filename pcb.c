@@ -6,11 +6,15 @@ PC : Points to the the current line reached for that program
 start: Points to first line of that program
 end: Points to last line of that program
 */
+
+//typedef struct PCB PCB;
+
 typedef struct PCB
 {
     int PC;
     int start;
     int end;
+    //int pages_max;
 }PCB;
 
 
@@ -26,6 +30,7 @@ PCB* makePCB(int start, int end){
     pcb->PC = start;
     pcb->start = start;
     pcb->end = end;
+    //pcb->pages_max = pages_max;
     return pcb;
 }
 

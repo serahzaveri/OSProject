@@ -3,7 +3,7 @@
 #include<string.h>
 #include<windows.h>
 #include"ram.h"
-//#include"pcb.h"
+#include"pcb.h"
 #include"kernel.h"
 
 int countTotalPages(FILE *fo){
