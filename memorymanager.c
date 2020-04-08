@@ -3,7 +3,8 @@
 #include<string.h>
 #include<windows.h>
 #include"ram.h"
-#include"pcb.h"
+//#include"pcb.h"
+#include"kernel.h"
 
 int countTotalPages(FILE *fo){
     //returns the total number of pages needed by the program
@@ -64,7 +65,10 @@ void loadPage(int pageNumber, FILE *fp, int framenumber) {
         }
         i++;
     }
-    
+}
+
+int updatePageTable(PCB *p, int pagenumber, int framenumber, int victimframe) {
+    return 0;
 }
 
 int launcher(FILE *source){
@@ -119,6 +123,12 @@ int launcher(FILE *source){
     // we now call countTotalPages
     int number = countTotalPages(fp);
     //we rewind the get the pointer pointing at start of file
+    int start = 0;
+    int end = number *4;
+    PCB* pc1 = makePCB(start,end);
+    printf("PCB created with start at %d and end at %d\n", pc1->start, pc1->end);
+    addToReady(pc1);
+    printf("Added to ready queue\n");
     rewind(fp);
     //testing loadpage function
     loadPage(1, fp, 0);

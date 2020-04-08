@@ -1,9 +1,9 @@
 #include "pcb.h"
-#include"memorymanager.h"
+//#include"memorymanager.h"
 /*
 Adds a pcb to the tail of the linked list
 */
-void addToReady(struct PCB*);
+void addToReady(PCB*);
 
 /*
 Returns the size of the queue
@@ -30,6 +30,8 @@ ERRORCODE -5 : NOT ENOUGH RAM (EXEC)
 int myinit(char*);
 
 int myinit2(char*);
+
+//void addToReady(struct PCB* pcb);
 
 int scheduler();
 

@@ -160,9 +160,10 @@ int myinit2(char* filename){
     //printf("Calling launcher\n");
     launcher(fp);
     fclose(fp);
-    if (start == -1) return -5;
-    PCB* pcb = makePCB(start,end);
-    addToReady(pcb);  
+    //addToRAM(fp, &start, &end);
+    //if (start == -1) return -5;
+    //PCB* pcb = makePCB(start,end);
+    //addToReady(pcb);  
     return 0;
 }
 

@@ -11,6 +11,8 @@ Size is 1000 strings
 */
 char *ram[40];
 
+char *ram2[1000];
+
 /*
 This function will delete the content in ram between the 2 indices parameters (inclusive)
 start : pointer to variable which will store the index of first line of file in ram
@@ -40,7 +42,7 @@ void addToRAM (FILE *p, int *start, int *end){
     // and RAM is not full yet.
     while (!feof(p) && i<1000){
         fgets(buffer,999,p);
-        ram[i]= strdup(buffer);
+        ram2[i]= strdup(buffer);
         i++;
     }
     // If RAM is full and we have not reached the end of the 
