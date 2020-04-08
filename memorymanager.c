@@ -125,7 +125,7 @@ int launcher(FILE *source){
     //we rewind the get the pointer pointing at start of file
     int start = 0;
     int end = number *4;
-    PCB* pc1 = makePCB(start,end);
+    PCB* pc1 = makePCB(start,end, number, 0, 0);
     printf("PCB created with start at %d and end at %d\n", pc1->start, pc1->end);
     addToReady(pc1);
     printf("Added to ready queue\n");
