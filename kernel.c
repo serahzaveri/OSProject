@@ -169,6 +169,7 @@ int myinit2(char* filename){
 }
 
 int scheduler(){
+    /*
     // set CPU quanta to default, IP to -1, IR = NULL
     CPU.quanta = DEFAULT_QUANTA;
     CPU.IP = -1;
@@ -198,7 +199,7 @@ int scheduler(){
         }
     }
     // reset RAM
-    resetRAM();
+    resetRAM();*/
     return 0;
 }
 

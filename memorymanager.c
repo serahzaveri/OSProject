@@ -68,6 +68,10 @@ void loadPage(int pageNumber, FILE *fp, int framenumber) {
 }
 
 int updatePageTable(PCB *p, int pagenumber, int framenumber, int victimframe) {
+    if(victimframe == -1){
+        p->pagetable[pagenumber] = framenumber;
+    }
+    else
     return 0;
 }
 
@@ -85,7 +89,7 @@ int launcher(FILE *source){
     int num = 0;
     char i[5];
     itoa(num, i, 10);
-    char name[] = "//targetfile";
+    char name[] = "//";
     strcat(name, i);
     num++;
     strcat(name, ".txt");
@@ -110,7 +114,7 @@ int launcher(FILE *source){
     fclose(target);
 
     FILE *fp;
-    char filename[] = "targetfile0.txt";
+    char filename[] = "0.txt";
     // Open the file 
     fp = fopen(filename, "r"); 
     // Check if file exists 
@@ -123,10 +127,8 @@ int launcher(FILE *source){
     // we now call countTotalPages
     int number = countTotalPages(fp);
     //we rewind the get the pointer pointing at start of file
-    int start = 0;
-    int end = number *4;
-    PCB* pc1 = makePCB(start,end, number, 0, 0);
-    printf("PCB created with start at %d and end at %d\n", pc1->start, pc1->end);
+    PCB* pc1 = makePCB(number);
+    //printf("PCB created with start at %d and end at %d\n", pc1->start, pc1->end);
     addToReady(pc1);
     printf("Added to ready queue\n");
     rewind(fp);

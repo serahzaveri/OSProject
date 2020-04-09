@@ -12,12 +12,13 @@ end: Points to last line of that program
 typedef struct PCB
 {
     int PC;
-    int start;
-    int end; 
     int PC_page;
     int PC_offset;
     int pages_max;
+    int pagetable[10];
 }PCB;
+
+//The index of the array is the page number. The values stored in the cell is the frame number.
 
 
 /*
@@ -27,14 +28,15 @@ PC = start
 start = start
 end = end
 */
-PCB* makePCB(int start, int end, int pages_max, int PC_page, int PC_offset){
+PCB* makePCB(int pages_max){
     PCB* pcb = (PCB*)malloc(sizeof(PCB));
-    pcb->PC = start;
-    pcb->start = start;
-    pcb->end = end;
+    //pcb->PC = 0;
     pcb->pages_max = pages_max;
-    pcb->PC_offset = PC_offset;
-    pcb->PC_page = PC_page;
+    //pcb->PC_offset = 0;
+    //pcb->PC_page = 0;
+    for(int i =0; i<10; i++){
+        pcb->pagetable[i] = -1;
+    }
     return pcb;
 }
 
