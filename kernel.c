@@ -126,7 +126,7 @@ ERRORCODE 0 : NO ERROR
 ERRORCODE -3 : SCRIPT NOT FOUND
 ERRORCODE -5 : NOT ENOUGH RAM (EXEC)
 */
-int myinit(char* filename){
+int myinit2(char* filename){
     /*
     // Open the filename to get FILE *
     // call addToRam on that File *
@@ -145,22 +145,28 @@ int myinit(char* filename){
     return 0;
 }
 
-int myinit2(char* filename){
+int myinit(char* filename){
     // Open the filename to get FILE *
     // call addToRam on that File *
     // If error (check via start/end variable), return that error
     // Else create pcb using MakePCB
     // Then add it to the ReadyQueue
-    FILE * fp = fopen(filename,"r");
-    if (fp == NULL) return -3;
-    int start;
-    int end;
-    //printf("File opened\n");
+    printf("Entered myinit with filename %s\n", filename);
+    char buffer[100];
+    //we first get the current diretory 
+    GetCurrentDirectory(100, buffer);
+    printf("The current directory is %s\n", buffer);
+    FILE * fo = fopen(filename,"r");
+    if (fo == NULL) {
+        return -3;
+    }
+    printf("File opened\n");
+    
     //addToRAM(fp,&start,&end);
     // WE CALL LAUNCHER HERE
-    //printf("Calling launcher\n");
-    launcher(fp);
-    fclose(fp);
+    launcher(fo);
+    fclose(fo);
+    //printf("File closed\n");
     //addToRAM(fp, &start, &end);
     //if (start == -1) return -5;
     //PCB* pcb = makePCB(start,end);

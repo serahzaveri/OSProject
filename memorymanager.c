@@ -6,6 +6,8 @@
 #include"pcb.h"
 #include"kernel.h"
 
+int num = 0;
+
 int countTotalPages(FILE *fo){
     //returns the total number of pages needed by the program
     int count = -1;
@@ -71,7 +73,10 @@ int updatePageTable(PCB *p, int pagenumber, int framenumber, int victimframe) {
     if(victimframe == -1){
         p->pagetable[pagenumber] = framenumber;
     }
-    else
+    else {
+        p->pagetable[pagenumber] = victimframe;
+    }
+    
     return 0;
 }
 
@@ -80,20 +85,22 @@ int launcher(FILE *source){
     //we now copy the file into the backing store
     //in order to do so we first get the current directory
     char buffer[100];
+    //we have buffer2 to go back to the previous dircetory
+    char buffer2[100];
     //we first get the current diretory 
     GetCurrentDirectory(100, buffer);
+    strcpy(buffer2, buffer);
     //we then concat backing store to the current directory
     char add[] = "//backingstore";
     strcat(buffer, add);
     BOOL changeDIR = SetCurrentDirectory(buffer);
-    int num = 0;
     char i[5];
     itoa(num, i, 10);
     char name[] = "//";
     strcat(name, i);
     num++;
     strcat(name, ".txt");
-    //printf("IMPO: the name of the file will be %s\n", name);
+    printf("IMPO: the name of the file will be %s\n", name);
     strcat(buffer, name);
     //printf("This is what is stored in the buffer %s \n", buffer);
     FILE *target = fopen(buffer,"w");
@@ -123,22 +130,28 @@ int launcher(FILE *source){
         printf("Could not open file\n"); 
         return 0; 
     } 
-
+    
+    
     // we now call countTotalPages
     int number = countTotalPages(fp);
     //we rewind the get the pointer pointing at start of file
     PCB* pc1 = makePCB(number);
-    //printf("PCB created with start at %d and end at %d\n", pc1->start, pc1->end);
+    printf("PCB created with %d pages\n", pc1->pages_max);
     addToReady(pc1);
     printf("Added to ready queue\n");
     rewind(fp);
     //testing loadpage function
-    loadPage(1, fp, 0);
+    loadPage(0, fp, 2);
+    updatePageTable(pc1, 1, 0, -1);
+    printf("Page table updated\n");
     fclose(fp);
     int emptyFrame = findFrame();
     //if(emptyFrame == -1) {
     int random = findVictim();
     printf("The random number generated is %d\n", random);
+    
+    //DeleteFile("0.txt");
+    SetCurrentDirectory(buffer2);
     //}
     return 0;
 }

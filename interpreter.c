@@ -150,12 +150,12 @@ int exec(char * words[]){
         //makes sure command input of filename is not empty so if only one file name is given it will enter if only once
         //returns 0 if both strings are identical
         if ( strcmp(words[i],"_NONE_") != 0 ) {
-            
+            printf("Entered exec loop %d\n", i);
             //filename[] stores the file if not none
             filename[nextFree] = strdup(words[i]);
             nextFree++;
             //calls myinit(filename)
-            errorCode = myinit2(words[i]);
+            errorCode = myinit(words[i]);
             if ( errorCode < 0){
                 displayCode(errorCode,words[i]);
                 printf("EXEC COMMAND ABORTED...\n");
