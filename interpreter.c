@@ -180,9 +180,8 @@ int exec(char * words[]){
         }
     }
     printf(")\t|----------|\n");
-    printf("We dont call scheduler for now\n");
-    //UNCOMMENET NEXT LINE LATER
-    //scheduler();
+
+    scheduler();
 
     printf("|----------| ");
     printf("\tTERMINATING ALL CONCURRENT PROGRAMS");

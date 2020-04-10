@@ -206,6 +206,7 @@ int scheduler(){
     }
     // reset RAM
     resetRAM();*/
+    printf("Entered the scheduler time to run the programs\n");
     return 0;
 }
 
