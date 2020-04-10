@@ -32,7 +32,7 @@ int findFrame(){
             return i/4;
         }
     }
-    return -2;
+    return -1;
 }
 
 int findVictim () {
@@ -61,9 +61,9 @@ void loadPage(int pageNumber, FILE *fp, int framenumber) {
     while(fscanf(fp, "%[^\n]\n", str) != EOF) {
         //printf("CHECK: %s\n", str);
         if (i >= file_start && i <= file_end) {
-            printf("Line %s is in RAM at %d\n", str, ram_start);
+            //printf("Line %s is in RAM at %d\n", str, ram_start);
             ram[ram_start] = str;
-            ram_start ++;
+            ram_start++;
         }
         i++;
     }
@@ -124,7 +124,7 @@ int launcher(FILE *source){
     char filename[] = "";
     itoa(num, filename, 10);
     strcat(filename, ".txt");
-    printf("File to tree %s\n", filename);
+    //printf("File to tree %s\n", filename);
     
     
     // Open the file 
@@ -143,10 +143,13 @@ int launcher(FILE *source){
     PCB* pc1 = makePCB(number);
     printf("PCB created with %d pages\n", pc1->pages_max);
     int emptyFrame = findFrame();
+    rewind(fp);
     loadPage(0, fp, emptyFrame);
+    //printf("Page of program loaded into %d frame\n", emptyFrame);
     updatePageTable(pc1, 0, emptyFrame, -1);
     if(pc1->pages_max > 1) {
         int emptyFrame2 = findFrame();
+        rewind(fp);
         loadPage(1, fp, emptyFrame2);
         updatePageTable(pc1, 1, emptyFrame2, -1);
         printf("2 pages of program loaded into RAM in %d and %d frames\n", emptyFrame, emptyFrame2);
@@ -159,7 +162,7 @@ int launcher(FILE *source){
     rewind(fp);
     //testing loadpage function
     //updatePageTable(pc1, 1, 0, -1);
-    printf("Page table updated\n");
+    //printf("Page table updated\n");
     fclose(fp);
     
     //if(emptyFrame == -1) {

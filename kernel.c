@@ -155,12 +155,12 @@ int myinit(char* filename){
     char buffer[100];
     //we first get the current diretory 
     GetCurrentDirectory(100, buffer);
-    printf("The current directory is %s\n", buffer);
+    //printf("The current directory is %s\n", buffer);
     FILE * fo = fopen(filename,"r");
     if (fo == NULL) {
         return -3;
     }
-    printf("File opened\n");
+    //printf("File opened\n");
     
     //addToRAM(fp,&start,&end);
     // WE CALL LAUNCHER HERE
